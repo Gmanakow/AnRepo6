@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">RecyclerViewApp</string>
+    <string name="search">search</string>
+    <string name="loremPicsumLinkPart1">https://picsum.photos/id/</string>
+    <string name="loremPicsumLinkPart2">/200</string>
+    <string name="placeholder">placeholder</string>
+    <string name="save_changes">save changes</string>
+    <string name="refresh_image">refresh image</string>
+    <string name="delete_item_confirmation">Do you want to delete this item?</string>
+
+</resources>
