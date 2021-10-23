@@ -3,18 +3,18 @@ package com.manakov.recyclerviewapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
-class MainActivity : AppCompatActivity(), FragmentActionListener{
+class MainActivity : AppCompatActivity(), FragmentActionListener {
     companion object {
         const val LOG_TAG = "MainActivity"
     }
 
-    private lateinit var listFragment : ListFragment
+    private lateinit var listFragment: ListFragment
     private lateinit var dataFragment: DataFragment
     private var searchStatus = false
     private var inDataFragment = false
+
+    private val isTablet: Boolean by lazy { resources.getBoolean(R.bool.isTablet) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +32,12 @@ class MainActivity : AppCompatActivity(), FragmentActionListener{
             dataFragment = DataFragment.newInstance(dataItem, index)
             add(dataFragment, DataFragment.BACK_STACK_TAG)
             addToBackStack(DataFragment.BACK_STACK_TAG)
-            replace(R.id.listFragmentFrameLayout, dataFragment)
+
+            if (!isTablet) {
+                replace(R.id.listFragmentFrameLayout, dataFragment)
+            } else {
+                replace(R.id.dataFragmentFrameLayout, dataFragment)
+            }
             inDataFragment = true
             commit()
         }
@@ -45,7 +50,7 @@ class MainActivity : AppCompatActivity(), FragmentActionListener{
             commit()
         }
         supportFragmentManager.popBackStack()
-        inDataFragment = false;
+        inDataFragment = false
     }
 
     override fun onChangeSearchStatus(boolean: Boolean) {
@@ -53,8 +58,8 @@ class MainActivity : AppCompatActivity(), FragmentActionListener{
     }
 
     override fun onBackPressed() {
-        if (searchStatus && !inDataFragment){
-            listFragment.list.forEach{
+        if (searchStatus && !inDataFragment) {
+            listFragment.list.forEach {
                 it.visibility = true
             }
             listFragment.refresh()
